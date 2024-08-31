@@ -1,16 +1,28 @@
-from langchain_community.document_loaders import YoutubeLoader
+# from langchain_community.document_loaders import YoutubeLoader
+from youtube_transcript_api import YouTubeTranscriptApi
 import requests
 import base64
 
 def getCaption(videoID: str) -> str:
-    try:
-        loader = YoutubeLoader.from_youtube_url(
-            f"https://www.youtube.com/watch?v={videoID}", language=["en", "ja"]
-        )
+    # try:
+    #     loader = YoutubeLoader.from_youtube_url(
+    #         youtube_url=f"https://www.youtube.com/watch?v={videoID}", add_video_info=False, language=["en", "ja"]
+    #     )
 
-        return loader.load()[0].page_content
-    except:
+    #     return loader.load()[0].page_content
+    # except:
+    #     return None
+    
+    try:
+        transcript_list = YouTubeTranscriptApi.list_transcripts(video_id=videoID)
+        transcript = transcript_list.find_transcript(['ja','en'])
+        subtitles = transcript.fetch()
+        plain_text = ' '.join([entry['text'] for entry in subtitles])
+        return plain_text
+            
+    except Exception as e:
         return None
+
     
 def getThumbnail(videoID: str) -> bytes:
     url = f"https://img.youtube.com/vi/{videoID}/maxresdefault.jpg"

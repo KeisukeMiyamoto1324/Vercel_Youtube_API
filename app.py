@@ -1,7 +1,6 @@
 from flask import Flask, request, jsonify, Response
 import youtube
 
-
 app = Flask(__name__)
 app.json.ensure_ascii = False
 
@@ -22,6 +21,8 @@ def youtubeData():
         "caption": caption,
         "thumbnail": thumbnail
     }
+    
+    print(videoID)
     
     return data
 
