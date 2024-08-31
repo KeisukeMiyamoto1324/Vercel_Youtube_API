@@ -22,9 +22,7 @@ def youtubeData():
         "thumbnail": thumbnail
     }
     
-    print(videoID)
-    
-    return data
+    return jsonify(data)
 
 if __name__ == "__main__":
     app.run(debug=True)
