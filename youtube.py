@@ -21,7 +21,7 @@ def getCaption(videoID: str) -> str:
         return plain_text
             
     except Exception as e:
-        return None
+        return ""
 
     
 def getThumbnail(videoID: str) -> bytes:
